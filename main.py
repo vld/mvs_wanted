@@ -14,7 +14,7 @@ def parse:
 
 @app.route("/")
 def hello():
-    return "Hello World!\nAll images owned by Thomas Leuthard(https://www.flickr.com/photos/thomasleuthard/)"
+    return "Hello World!\nAll rights for the photo reserved by Thomas Leuthard(https://www.flickr.com/photos/thomasleuthard/)"
 
 if __name__ == "__main__":
     app.run()
