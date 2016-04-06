@@ -1,7 +1,8 @@
-import urllib
+import urllib.request
 import json
 import pymongo
 from flask import Flask
+import os
 app = Flask(__name__)
 
 # Транспортні засоби у розшуку. ID - Ідентифікатор. OVD - Регіон (орган внутрішніх справ).
@@ -10,7 +11,10 @@ app = Flask(__name__)
 def parse:
     description = urllib.request.urlopen('http://data.gov.ua/view-dataset/dataset-file/2334').read()
     dc = json.loads(description.decode('utf-8'))
-    mongo_url = dc['url']
+    filename = dc['url'].split('/')[-1]
+    os.system('wget %s' % dc['url'])
+    os.system('mongodump --db mvs_wanted --collection autos --file %s' % filename)
+
 
 @app.route("/")
 def hello():
