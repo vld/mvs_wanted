@@ -14,7 +14,8 @@ def load_data():
         if 'autos' in mongo_client.mvs_wanted.collection_names():
             mongo_client.mvs_wanted.autos.drop()
         os.system('mongoimport --db mvs_wanted --collection autos --file %s' % filepath)
-        mongo_client.mvs_wanted.autos.create_index([("NKU", pymongo.TEXT), ("NSH", pymongo.TEXT)], default_language='english', background=True)
+        mongo_client.mvs_wanted.autos.create_index([("NKU", pymongo.ASCENDING)], background=True)
+        mongo_client.mvs_wanted.autos.create_index([("NSH", pymongo.ASCENDING)], background=True)
         mongo_client.mvs_wanted.autos.create_index([("NOM", pymongo.ASCENDING)], background=True)
 
 if __name__ == "__main__":
