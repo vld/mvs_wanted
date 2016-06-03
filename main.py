@@ -21,10 +21,17 @@ def search_nom(nom):
     number_en = nom.translate(ru_to_en)
     return autos.find({'NOM': {'$regex': '(%s|%s)' % (number_ru, number_en)}})
 
+def search_vin(vin):
+    return autos.find({'$or': [{'NKU': {'$regex': vin}}, {'NSH': {'$regex': vin}}]})
+
 @app.route('/search', methods=['POST'])
 def search():
-    print(request.form)
-    results = search_nom(request.form['text'])
+    results = []
+    if (bool(request.form['number']) | bool(request.form['vin'])):
+        if bool(request.form['number']):
+            results = search_nom(request.form['number'])
+        elif bool(request.form['vin']):
+            results = search_vin(request.form['vin'])
     return render_template('results.html', results=results)
 
 
